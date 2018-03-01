@@ -1,0 +1,27 @@
+{% extends 'inputbox/base.html' %}
+{% block title %}Home{% endblock %}
+{% block article-active %}active{% endblock %}
+{% block body %}
+
+{% if object_list %}
+<ul>
+    <h2>Below shows all your article.</h2>
+    {% for article in object_list %}
+    <li>
+        <form action="{% url 'article:article-delete' article.id%}" method="post">{% csrf_token %}
+        <a href="{% url 'article:detail' article.id %}">
+            <p>
+            <img src="{{article.sample_cover.url}}">
+                </p>
+            {{article}}
+        </a>
+        <input type="submit" value="Delete" {% if not user.is_authenticated %}style="visibility:hidden;"{% endif %}/}>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<h1>No Articles! Please add some first.</h1>
+{% endif %}
+
+{% endblock %}

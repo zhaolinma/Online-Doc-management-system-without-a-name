@@ -1,0 +1,11 @@
+{% extends 'inputbox/base.html' %}
+{% block title %}New Part{% endblock %}
+{% block add-article-active %}active{% endblock %}
+
+{% block body %}
+<form action="" method="post">{% csrf_token %}
+    {% include 'inputbox/form-template.html' %}
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

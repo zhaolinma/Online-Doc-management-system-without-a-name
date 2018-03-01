@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}No name yet{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'inputbox/style.css' %}"/>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href=" {% url 'article:index' %}">&nbsp;LOGO&nbsp; </a>
+        </div>
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav">
+                <li class="{% block article-active %}{% endblock %}">
+                    <a class="navbar-brand" href="{% url 'article:index' %}">
+                        <span aria-hidden="true"></span>
+                        &nbsp;Articles
+                    </a>
+                </li>
+                <li class="">
+                    <a class="navbar-brand" href="#">
+                        <span aria-hidden="true"></span>
+                        &nbsp;Plot
+                    </a>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search" method="get" action="#">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="query" >
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="{% block add-article-active %}{% endblock %}" {% if not user.is_authenticated %}style="visibility:hidden;"{% endif %}>
+                    <a class="navbar-brand" href="{% url 'article:article-add' %}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        &nbsp;Add Article
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="">
+                    <a class="navbar-brand" href="#">
+                        &nbsp;&nbsp;Hi,{{user.username}}
+                    </a>
+                </li>
+                <li class="">
+                    <a class="navbar-brand" href="{% url 'article:logout' %}">
+                        &nbsp;&nbsp;Log out
+                    </a>
+                </li>
+                {% else %}
+                <li class="{% block login-active %}{% endblock %}">
+                    <a class="navbar-brand" href="{% url 'article:login' %}">
+                        &nbsp;&nbsp;Log in
+                    </a>
+                </li>
+                <li class="{% block sign-up-active %}{% endblock %}">
+                    <a class="navbar-brand" href="{% url 'article:register' %}">
+                        &nbsp;Sign up
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+    {% block body%}
+    {% endblock %}
+</body>
+</html>

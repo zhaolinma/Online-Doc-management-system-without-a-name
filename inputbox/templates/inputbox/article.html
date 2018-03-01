@@ -1,0 +1,35 @@
+{% extends 'inputbox/base.html' %}
+{% block title %}Article Details{% endblock %}
+{% block body %}
+
+<h1>{{article.title}}</h1>
+<h3>Author:{{article.user.username}}</h3>
+<p>
+    <img src="{{article.sample_cover.url}}">
+</p>
+<form action="{% url 'article:article-edit' article.id%}" method="post">{% csrf_token %}
+<input type="submit" value="Edit Article" {% if not user.is_authenticated %}style="visibility:hidden;"{% endif %}/>
+</form>
+<form action="{% url 'article:part-add' article.id%}" method="post">{% csrf_token %}
+<input type="submit" value="Add Part" {% if not user.is_authenticated %}style="visibility:hidden;"{% endif %}/>
+</form>
+{% if article.part_set.all %}
+<p>The parts and detail show as below</p>
+{% for part in article.part_set.all %}
+<li>
+    <h3>{{part.type}}</h3>
+    {{part.text}}
+    <form action="{% url 'article:part-edit' article.id part.id%}" method="post">{% csrf_token %}
+<input type="submit" value="Edit" {% if not user.is_authenticated %}style="visibility:hidden;"{% endif %}/>
+</form>
+    <form action="{% url 'article:part-delete' article.id part.id%}" method="post">{% csrf_token %}
+<input type="submit" value="Delete" {% if not user.is_authenticated %}style="visibility:hidden;"{% endif %}/>
+</form>
+</li>
+{% endfor %}
+{% else %}
+<br>
+<p>This article has no parts, add some parts to display here.</p>
+{% endif %}
+
+{% endblock %}
