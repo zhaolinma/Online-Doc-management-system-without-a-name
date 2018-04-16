@@ -5,7 +5,7 @@ This verson I only finish the basic feature. Include: login/logout,sign in,add n
 
 The database only have 2 objects by now: Article(FK=user),Part(FK=Article). Both are 1 to many relations. Also I'm really not spend any time on front end. So it looks really simple.
 
-Below is some feature showing:
+Below are some feature showing:
 
 When a user logged in. He should get all his article at the index page with a cover
 <img width="1614" alt="screen shot 2018-03-01 at 8 26 21 pm" src="https://user-images.githubusercontent.com/25581405/36838082-4837938a-1d92-11e8-83d3-d2a5123eab4b.png">
